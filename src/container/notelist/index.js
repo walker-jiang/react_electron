@@ -3,28 +3,59 @@ import styled from 'styled-components';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Card from '@material-ui/core/Card';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import Icon from '@material-ui/core/Icon';
 import SearchIcon from '@material-ui/icons/Search';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from 'components/self/icon';
 import background_wall from './imgs/background_wall.jpg';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import { withRouter } from 'react-router-dom';
 
 class Index extends Component {
-
+  state = {
+    anchorEl: null,
+  };
+  handleClose = (e) => {
+    this.setState({ anchorEl: null }, () => {
+      this.props.history.push('noteEdit');
+    });
+  }
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
   render() {
+    const { anchorEl } = this.state;
     return (
       <Container>
         <Header>
           <SpecAppBar position="static">
             <Toolbar>
-              <IconButton color="inherit" aria-label="Open drawer">
-                +
-              </IconButton>
+              <div>
+                <SpecFab
+                  aria-label="Add"
+                  size="small"
+                  aria-owns={anchorEl ? 'simple-menu' : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleClick}>
+                  <AddIcon />
+                </SpecFab>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleClose}>周计划</MenuItem>
+                  <MenuItem onClick={this.handleClose}>备忘录</MenuItem>
+                </Menu>
+              </div>
               <Typography variant="h6" color="inherit" noWrap>
                 小笺
               </Typography>
@@ -123,6 +154,12 @@ const CardFooter = styled.div`
   text-align: right;
   padding: 3px 5px;
   border-top: 1px solid gray;
+`;
+const SpecFab = styled(Fab)`
+  &&&{
+    background-color: #e0e0e000;
+    color: white;
+  }
 `;
 /*
 @作者：姜中希
