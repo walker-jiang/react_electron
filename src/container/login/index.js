@@ -14,12 +14,10 @@ export default class Index extends Component {
 }
 /* 将登录窗总是在窗体中间*/
 const Window = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  
   background-color: #006699;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 `;
 /*
 @作者：姜中希
